@@ -1,0 +1,40 @@
+/* Establece el fondo */
+body {
+  background-color: #f2f2f2; /* Color de fondo */
+  font-family: Arial, sans-serif; /* Tipografía */
+}
+
+/* Contenedor principal */
+.container {
+  max-width: 800px; /* Ancho máximo del contenedor */
+  margin: 0 auto; /* Centra el contenedor */
+  padding: 20px; /* Espacio interior */
+}
+
+/* Estilo de los elementos */
+.glass-table {
+  background-color: rgba(255, 255, 255, 0.8); /* Color de fondo translúcido */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
+  padding: 20px; /* Espacio interior */
+  margin-bottom: 20px; /* Espacio entre tarjetas */
+}
+
+/* Estilo del texto */
+h1, h2, h3 {
+  color: #333; /* Color del texto */
+}
+
+p {
+  color: #666; /* Color del texto secundario */
+}
+
+/* Enlaces */
+a {
+  color: #007bff; /* Color del enlace */
+  text-decoration: none; /* Sin subrayado */
+}
+
+a:hover {
+  text-decoration: underline; /* Subrayado al pasar el ratón */
+}
