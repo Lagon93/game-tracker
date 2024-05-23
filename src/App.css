@@ -1,40 +1,199 @@
 /* Establece el fondo */
 body {
-  background-color: #f2f2f2; /* Color de fondo */
-  font-family: Arial, sans-serif; /* Tipografía */
+  background-color: #f2f2f2;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.dark-mode body {
+  background-color: #333;
+  color: #fff;
+}
+
+.app.dark-mode .glass-container {
+  background: rgba(50, 50, 50, 0.8);
+  color: #fff;
+}
+
+.header {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.stats, .controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+  font-size: 2rem;
+  color: #333;
+}
+
+.search-input {
+  padding: 0.5rem;
+  border: 0.0625rem solid #ccc;
+  border-radius: 0.625rem;
+  margin-right:1rem;
+}
+
+.dark-mode-switch {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.5rem;
 }
 
 /* Contenedor principal */
-.container {
-  max-width: 800px; /* Ancho máximo del contenedor */
-  margin: 0 auto; /* Centra el contenedor */
-  padding: 20px; /* Espacio interior */
+.glass-container {
+  max-width: 50rem;
+  margin: 2rem auto;
+  padding: 1.25rem;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
 }
 
-/* Estilo de los elementos */
+/* Estilo de la tabla */
 .glass-table {
-  background-color: rgba(255, 255, 255, 0.8); /* Color de fondo translúcido */
-  border-radius: 10px; /* Bordes redondeados */
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra */
-  padding: 20px; /* Espacio interior */
-  margin-bottom: 20px; /* Espacio entre tarjetas */
+  width: 100%;
+  border-spacing: 0 0.625rem;
+  border-collapse: separate;
+  cursor: pointer;
 }
 
-/* Estilo del texto */
-h1, h2, h3 {
-  color: #333; /* Color del texto */
+.glass-table th, .glass-table td {
+  padding: 0.625rem;
+  background: rgba(255, 255, 255, 0.9);
+  border-bottom: 0.0625rem solid #ddd;
+  text-align: center;
 }
 
-p {
-  color: #666; /* Color del texto secundario */
+.glass-table th {
+  font-weight: bold;
+  color: #333;
 }
 
-/* Enlaces */
-a {
-  color: #007bff; /* Color del enlace */
-  text-decoration: none; /* Sin subrayado */
+.glass-table td {
+  color: #666;
 }
 
-a:hover {
-  text-decoration: underline; /* Subrayado al pasar el ratón */
+.glass-table tr {
+  transition: background 0.3s;
+}
+
+.glass-table tr:hover {
+  background: rgba(0, 0, 0, 0.05);
+
+  
+}
+
+:root {
+  --bg1: #e0e0e0;
+  --bg2: #100f12;
+  --orange: #ffc207;
+  --dark-purple: rgb(44, 42, 44);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: var(--bg1);
+  height: 100%;
+  width: 100%;
+  -webkit-transition: all 0.6s;
+  transition: all 0.6s;
+  z-index: -1;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 4.7rem;
+  height: 2rem;
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+
+
+.slider {
+  position: absolute;
+  background-color: var(--dark-purple);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 1rem;
+  -webkit-transition: all 0.4s;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+
+.slider::before {
+  position: absolute;
+  content: "";
+  background-color: var(--orange);
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 50%;
+  left: 5px;
+  bottom: 5px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider::after {
+  position: absolute;
+  content: "";
+  height: 1.4rem;
+  width: 1.4rem;
+  background-color: var(--dark-purple);
+  border-radius: 50%;
+  left: -26px;
+  bottom: 4px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider::before {
+  -webkit-transform: translateX(40px);
+          transform: translateX(40px);
+}
+
+input:checked + .slider::after {
+  -webkit-transform: translateX(60px);
+          transform: translateX(60px);
+}
+
+input:checked ~ .bg {
+  background-color: var(--bg2);
+}
+
+.approved {
+  color: green;
+  font-size: 1.5rem;
+}
+
+.not-approved {
+  color: red;
+  font-size: 1.5rem;
 }
