@@ -27,10 +27,27 @@ body {
   margin-bottom: 1rem;
 }
 
+.header{
+  flex-direction: column;
+}
+.glass-container{
+  overflow-x: auto;
+}
+@media (min-width: 800px) {
+  .header{
+      flex-direction: row;
+  }
+  
+}
+
 .stats, .controls {
   display: flex;
   align-items: center;
   gap: 1rem;
+}
+
+.stats{
+  font-size: 1.2rem;
 }
 
 .title {
@@ -196,4 +213,37 @@ input:checked ~ .bg {
 .not-approved {
   color: red;
   font-size: 1.5rem;
+}
+
+
+.text-container {
+
+  text-align: center;
+}
+
+.text-container {
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
+
+.text-container .text-pattern {  
+  color: transparent;
+  background-color: #293b8a;
+  background-image: repeating-linear-gradient(45deg,    transparent, transparent 25px,        rgba(255,255,255,.5) 25px, rgba(255,255,255,.5) 50px);
+   -webkit-background-clip: text;
+    background-clip: text;   
+  animation: color 10s linear infinite; 
+  background-size: 200%;  
+  -webkit-transform: translate3d(0,0,0);
+  -webkit-backface-visibility: hidden;
+}
+
+@keyframes color {
+  from { 
+    background-position: 0% 50%;
+  }
+  to { 
+    background-position: 100% 50%; 
+  }
 }

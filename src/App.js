@@ -76,8 +76,8 @@ function App() {
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <div className="header">
         <div className="stats">
-          <span>🎮 {data.length}</span>
-          <span>🏆 {totalAchievements}</span>
+          <span>🎮 <b> {data.length}</b></span>
+          <span>🏆 <b>{totalAchievements}</b></span>
         </div>
         <h1>GAME TRACKER</h1>
         <div className="controls">
@@ -95,40 +95,55 @@ function App() {
         </div>
       </div>
       <div className="glass-container">
-        <table className="glass-table">
-          <thead>
-            <tr>
-              <th>Caratula Juego</th>
-              <th onClick={() => requestSort('Juego')}>Juego</th>
+      <h1>Tabla de Datos desde Supabase</h1>
+      <table className="glass-table">
+        <thead>
+          <tr>
+            <th>Caratula Juego</th>
+            <th onClick={() => requestSort('Juego')}>Juego</th>
             <th onClick={() => requestSort('Fecha de finalización')}>Fecha de finalización</th>
             <th onClick={() => requestSort('Logros')}>Logros</th>
             <th>Plataforma</th>
             <th onClick={() => requestSort('Horas')}>Horas</th>
             <th onClick={() => requestSort('Nota')}>Nota</th>
-              <th>Recomendado</th>
-            </tr>
-          </thead>
-          <tbody>
-            {sortedData.map((item, index) => (
-              <tr key={index}>
-                <td><img src={item['Caratula Juego']} alt={item.Juego} style={{ width: '100px', height: 'auto' }} />  </td>              
+            <th>Recomendado</th>
+          </tr>
+        </thead>
+        <tbody>
+          {sortedData.map((item, index) => (
+            <React.Fragment key={index}>
+              <tr>
+                <td><img src={item['Caratula Juego']} alt={item.Juego} style={{ width: '100px', height: 'auto' }} /></td>
                 <td>{item.Juego}</td>
-                <td>{item['Fecha de finalización']}</td>
-                <td>{item.Logros}</td>
-                <td>{item.Plataforma}</td>
-                <td>{item.Horas}</td>
-                <td>{item.Nota}</td>
-                <td>  {item.Recomendado === 'Si' ? (
-                  <span className="approved">✓</span>
+                {item.Recomendado === null ? (
+                  <>
+                    <td colSpan="6" className="currently-playing"> 
+                    <div class="text-container">
+                      <div class="text-pattern"><b>Jugando actualmente</b> </div>
+                      </div></td>
+                  </>
                 ) : (
-                  <span className="not-approved">✗</span>
-                )}</td>
+                  <>
+                    <td>{item['Fecha de finalización']}</td>
+                    <td>{item.Logros || 0}</td>
+                    <td>{item.Plataforma}</td>
+                    <td>{item.Horas}</td>
+                    <td>{item.Nota}</td>
+                    <td>
+                      {item.Recomendado === 'Si' ? (
+                        <span className="approved">✓</span>
+                      ) : (
+                        <span className="not-approved">✗</span>
+                      )}
+                    </td>
+                  </>
+                )}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+            </React.Fragment>
+          ))}
+        </tbody>
+      </table>
+    </div></div>
   );
 }
 
