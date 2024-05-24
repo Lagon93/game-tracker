@@ -35,8 +35,15 @@ function App() {
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
+  const filteredData = React.useMemo(() => {
+    return data.filter(item =>
+      item.Juego.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [data, searchTerm]);
+
+
    const sortedData = React.useMemo(() => {
-    let sortableData = [...data];
+    let sortableData = [...filteredData];
     if (sortConfig.key) {
       sortableData.sort((a, b) => {
         let aValue = a[sortConfig.key];
@@ -60,7 +67,7 @@ function App() {
       });
     }
     return sortableData;
-  }, [data, sortConfig]);
+  }, [filteredData, sortConfig]);
 
   const requestSort = key => {
     let direction = 'ascending';
