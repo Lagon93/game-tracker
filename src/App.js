@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import supabase from './supabase';
 import './App.css';
+import Header from './Header';
+import Table from './Table';
+import Loader from './Loader';
+import Pagination from './Pagination';
 
 function App() {
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [darkMode, setDarkMode] = useState(false);
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const { data, error } = await supabase.from('Juegos_duplicate').select('*');
-        console.log(data);
-
         if (error) {
           console.error('Error fetching data:', error.message);
         } else {
@@ -21,9 +26,12 @@ function App() {
         }
       } catch (error) {
         console.error('Error fetching data:', error.message);
+      }  finally {
+        setIsLoading(false); // Finaliza la carga
       }
-    }
 
+      
+    }
     fetchData();
   }, []);
 
@@ -31,7 +39,6 @@ function App() {
     const logros = parseInt(item.Logros, 10);
     return acc + (isNaN(logros) ? 0 : logros);
   }, 0);
-
 
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
@@ -41,8 +48,7 @@ function App() {
     );
   }, [data, searchTerm]);
 
-
-   const sortedData = React.useMemo(() => {
+  const sortedData = React.useMemo(() => {
     let sortableData = [...filteredData];
     if (sortConfig.key) {
       sortableData.sort((a, b) => {
@@ -50,8 +56,8 @@ function App() {
         let bValue = b[sortConfig.key];
 
         if (sortConfig.key === 'Fecha de finalización') {
-          aValue = aValue ? new Date(aValue) : new Date(0);
-          bValue = bValue ? new Date(bValue) : new Date(0);
+          aValue = aValue ? new Date(aValue.split('/').reverse().join('-')) : new Date();
+          bValue = bValue ? new Date(bValue.split('/').reverse().join('-')) : new Date();
         } else if (sortConfig.key === 'Logros') {
           aValue = parseInt(aValue) || 0;
           bValue = parseInt(bValue) || 0;
@@ -79,78 +85,36 @@ function App() {
     setSortConfig({ key, direction });
   };
 
+  const currentData = React.useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    return sortedData.slice(startIndex, endIndex);
+  }, [sortedData, currentPage, itemsPerPage]);
+
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-      <div className="header">
-        <div className="stats">
-          <span>🎮 <b> {data.length}</b></span>
-          <span>🏆 <b>{totalAchievements}</b></span>
-        </div>
-        <h1>GAME TRACKER</h1>
-        <div className="controls">
-          <div className="search-input"><input 
-            type="text" 
-            placeholder="Buscar Juego..." 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
-          /></div>
-            <label className="switch">
-              <input type="checkbox"/>
-              <div className="slider"></div>
-              <div className="bg"></div>
-            </label>
-        </div>
-      </div>
+      <Header 
+        dataLength={data.length} 
+        totalAchievements={totalAchievements} 
+        searchTerm={searchTerm} 
+        setSearchTerm={setSearchTerm} 
+        toggleDarkMode={toggleDarkMode} 
+      />
       <div className="glass-container">
-      <h1>Tabla de Datos desde Supabase</h1>
-      <table className="glass-table">
-        <thead>
-          <tr>
-            <th>Caratula Juego</th>
-            <th onClick={() => requestSort('Juego')}>Juego</th>
-            <th onClick={() => requestSort('Fecha de finalización')}>Fecha de finalización</th>
-            <th onClick={() => requestSort('Logros')}>Logros</th>
-            <th>Plataforma</th>
-            <th onClick={() => requestSort('Horas')}>Horas</th>
-            <th onClick={() => requestSort('Nota')}>Nota</th>
-            <th>Recomendado</th>
-          </tr>
-        </thead>
-        <tbody>
-          {sortedData.map((item, index) => (
-            <React.Fragment key={index}>
-              <tr>
-                <td><img src={item['Caratula Juego']} alt={item.Juego} style={{ width: '100px', height: 'auto' }} /></td>
-                <td>{item.Juego}</td>
-                {item.Recomendado === null ? (
-                  <>
-                    <td colSpan="6" className="currently-playing"> 
-                    <div class="text-container">
-                      <div class="text-pattern"><b>Jugando actualmente</b> </div>
-                      </div></td>
-                  </>
-                ) : (
-                  <>
-                    <td>{item['Fecha de finalización']}</td>
-                    <td>{item.Logros || 0}</td>
-                    <td>{item.Plataforma}</td>
-                    <td>{item.Horas}</td>
-                    <td>{item.Nota}</td>
-                    <td>
-                      {item.Recomendado === 'Si' ? (
-                        <span className="approved">✓</span>
-                      ) : (
-                        <span className="not-approved">✗</span>
-                      )}
-                    </td>
-                  </>
-                )}
-              </tr>
-            </React.Fragment>
-          ))}
-        </tbody>
-      </table>
-    </div></div>
+        {isLoading ? <Loader /> : (
+          <>
+        <Table data={currentData} requestSort={requestSort} />
+        <Pagination
+          totalItems={sortedData.length}
+          itemsPerPage={itemsPerPage}
+          currentPage={currentPage}
+          setCurrentPage={setCurrentPage}
+        />
+        </>
+        )}
+      </div>
+        
+    </div>
   );
 }
 
