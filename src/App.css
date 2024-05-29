@@ -4,6 +4,7 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+  height: 120vh;
 }
 
 a {
@@ -14,14 +15,18 @@ a {
 .dark-mode body {
   background-color: #333;
   color: #fff;
+  min-height: 100%;
+  
 }
 .app.dark-mode {
   background-color: #1b1b1b;
   color: #000000;
+  height: max-content;
 }
 .app.dark-mode .glass-container {
   background: rgba(50, 50, 50, 0.8);
   color: #fff;
+  min-height: max-content;
 }
 
 /* Estilos para el encabezado */
@@ -309,4 +314,74 @@ button:hover, a:hover {
 
 .twitter-logo:hover {
   transform: scale(1.1);
+}
+
+/* Tab Styles */
+.tabs {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.tab-button {
+  padding: 1rem 2rem;
+  border: none;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.625rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  margin: 0 0.5rem;
+
+}
+
+.tab-button.active {
+  background: #1b95ff;
+  color: #fff;
+}
+
+.tab-button:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+/* Card Gallery Styles */
+.card-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 0.625rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s;
+  width: 200px;
+  text-align: center;
+}
+
+.card:hover {
+  transform: translateY(-0.5rem);
+}
+
+.card-image {
+  width: 100%;
+  height: auto;
+}
+
+.card-content {
+  padding: 1rem;
+}
+
+.card-content h3 {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  color: #333;
+}
+
+.card-content p {
+  margin: 0;
+  color: #666;
 }
