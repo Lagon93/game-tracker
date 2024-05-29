@@ -19,8 +19,12 @@ const Table = ({ data, requestSort }) => {
         {data.map((item, index) => (
           <React.Fragment key={index}>
             <tr>
-              <td><img src={item['Caratula Juego']} alt={item.Juego} style={{ width: '100px', height: 'auto' }} /></td>
-              <td>{item.Juego}</td>
+              <td>
+                <a href={item.link} target="_blank" rel="noopener noreferrer">
+                <img src={item['Caratula Juego']} alt={item.Juego} style={{ width: '100px', height: 'auto' }} /></a></td>
+              <td>
+              <a href={item.link} target="_blank" rel="noopener noreferrer">
+                {item.Juego}</a></td>
               {item.Recomendado === null ? (
                 <td colSpan="6" className="currently-playing"> 
                   <div className="text-container">

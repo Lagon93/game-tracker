@@ -1,4 +1,4 @@
-/* Establece el fondo */
+/* Establece estilos globales */
 body {
   background-color: #f2f2f2;
   font-family: Arial, sans-serif;
@@ -6,63 +6,63 @@ body {
   padding: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
+/* Estilos para el modo oscuro */
 .dark-mode body {
   background-color: #333;
   color: #fff;
 }
-
+.app.dark-mode {
+  background-color: #1b1b1b;
+  color: #000000;
+}
 .app.dark-mode .glass-container {
   background: rgba(50, 50, 50, 0.8);
   color: #fff;
 }
 
+/* Estilos para el encabezado */
 .header {
   display: flex;
   justify-content: space-evenly;
   align-items: center;
   padding: 1rem;
   background: rgba(255, 255, 255, 0.8);
-  border-radius: 0.625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
 }
 
-.header{
-  flex-direction: column;
-}
-.glass-container{
-  overflow-x: auto;
-}
-@media (min-width: 800px) {
-  .header{
-      flex-direction: row;
-  }
-  
-}
-
-.stats, .controls {
+/* Estilos para estadísticas y controles */
+.stats,
+.controls {
   display: flex;
   align-items: center;
   gap: 1rem;
 }
 
-.stats{
+.stats {
   font-size: 1.2rem;
 }
 
+/* Estilos para el título */
 .title {
   margin: 0;
   font-size: 2rem;
   color: #333;
 }
 
+/* Estilos para el campo de búsqueda */
 .search-input {
   padding: 0.5rem;
   border: 0.0625rem solid #ccc;
   border-radius: 0.625rem;
-  margin-right:1rem;
+  margin-right: 1rem;
 }
 
+/* Estilos para el interruptor del modo oscuro */
 .dark-mode-switch {
   background: none;
   border: none;
@@ -70,7 +70,7 @@ body {
   font-size: 1.5rem;
 }
 
-/* Contenedor principal */
+/* Estilos para el contenedor principal */
 .glass-container {
   max-width: 50rem;
   margin: 2rem auto;
@@ -79,9 +79,10 @@ body {
   background: rgba(255, 255, 255, 0.8);
   border-radius: 0.625rem;
   box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* Agregado */
 }
 
-/* Estilo de la tabla */
+/* Estilos para la tabla */
 .glass-table {
   width: 100%;
   border-spacing: 0 0.625rem;
@@ -89,7 +90,8 @@ body {
   cursor: pointer;
 }
 
-.glass-table th, .glass-table td {
+.glass-table th,
+.glass-table td {
   padding: 0.625rem;
   background: rgba(255, 255, 255, 0.9);
   border-bottom: 0.0625rem solid #ddd;
@@ -111,10 +113,9 @@ body {
 
 .glass-table tr:hover {
   background: rgba(0, 0, 0, 0.05);
-
-  
 }
 
+/* Variables de color */
 :root {
   --bg1: #e0e0e0;
   --bg2: #100f12;
@@ -122,25 +123,7 @@ body {
   --dark-purple: rgb(44, 42, 44);
 }
 
-* {
-  margin: 0;
-  padding: 0;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box;
-}
-
-.bg {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background-color: var(--bg1);
-  height: 100%;
-  width: 100%;
-  -webkit-transition: all 0.6s;
-  transition: all 0.6s;
-  z-index: -1;
-}
-
+/* Estilos para el interruptor */
 .switch {
   position: relative;
   display: inline-block;
@@ -150,8 +133,6 @@ body {
   overflow: hidden;
 }
 
-
-
 .slider {
   position: absolute;
   background-color: var(--dark-purple);
@@ -160,7 +141,6 @@ body {
   right: 0;
   bottom: 0;
   border-radius: 1rem;
-  -webkit-transition: all 0.4s;
   transition: all 0.4s;
   cursor: pointer;
 }
@@ -174,7 +154,6 @@ body {
   border-radius: 50%;
   left: 5px;
   bottom: 5px;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
@@ -187,67 +166,63 @@ body {
   border-radius: 50%;
   left: -26px;
   bottom: 4px;
-  -webkit-transition: 0.4s;
   transition: 0.4s;
 }
 
 input:checked + .slider::before {
-  -webkit-transform: translateX(40px);
-          transform: translateX(40px);
+  transform: translateX(40px);
 }
 
 input:checked + .slider::after {
-  -webkit-transform: translateX(60px);
-          transform: translateX(60px);
+  transform: translateX(60px);
 }
 
 input:checked ~ .bg {
   background-color: var(--bg2);
 }
 
+/* Estilos para los íconos de aprobación */
+.approved,
+.not-approved {
+  font-size: 1.5rem;
+}
+
 .approved {
   color: green;
-  font-size: 1.5rem;
 }
 
 .not-approved {
   color: red;
-  font-size: 1.5rem;
 }
 
-
+/* Estilos para el texto animado */
 .text-container {
-
   text-align: center;
-}
-
-.text-container {
   font-size: 1rem;
   text-transform: uppercase;
 }
 
-
-.text-container .text-pattern {  
+.text-container .text-pattern {
   color: transparent;
   background-color: #293b8a;
-  background-image: repeating-linear-gradient(45deg,    transparent, transparent 25px,        rgba(255,255,255,.5) 25px, rgba(255,255,255,.5) 50px);
-   -webkit-background-clip: text;
-    background-clip: text;   
-  animation: color 10s linear infinite; 
-  background-size: 200%;  
-  -webkit-transform: translate3d(0,0,0);
-  -webkit-backface-visibility: hidden;
+  background-image: repeating-linear-gradient(45deg, transparent, transparent 25px, rgba(255, 255, 255, 0.5) 25px, rgba(255, 255, 255, 0.5) 50px);
+  background-clip: text;
+  animation: color 10s linear infinite;
+  background-size: 200%;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
 }
 
 @keyframes color {
-  from { 
+  from {
     background-position: 0% 50%;
   }
-  to { 
-    background-position: 100% 50%; 
+  to {
+    background-position: 100% 50%;
   }
 }
 
+/* Estilos para el cargador */
 .loader {
   display: flex;
   justify-content: center;
@@ -268,10 +243,8 @@ input:checked ~ .bg {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
-.app {
-  transition: background-color 0.3s;
-}
 
+/* Estilos para la paginación */
 .pagination {
   display: flex;
   justify-content: center;
@@ -288,11 +261,12 @@ input:checked ~ .bg {
   justify-content: center;
   align-items: center;
   background-color: #ffffff;
-  border-radius: 50%;
+  border-radius:
+ 50%;
   cursor: pointer;
   transition: color 128ms ease-out, background-color 128ms ease-out;
   text-decoration: none;
-  border-style:solid;
+  border-style: solid; /* Corrección: añadido */
 }
 
 .page-btn.active {
@@ -312,9 +286,27 @@ input:checked ~ .bg {
   cursor: not-allowed;
 }
 
-.Arrows{
+/* Estilos para las flechas de paginación */
+.Arrows {
   width: 1rem;
-  border-style:none;
+  border-style: none;
   background-color: rgba(255, 255, 255, 0.8);
   cursor: pointer;
+}
+
+button:hover, a:hover {
+  transform: scale(1.05);
+}
+
+/* Estilos para el ícono de Twitter */
+.twitter-logo {
+  width: 24px;
+  height: 24px;
+  margin-left: 1rem;
+  cursor: pointer;
+  transition: transform 0.3s;
+}
+
+.twitter-logo:hover {
+  transform: scale(1.1);
 }
