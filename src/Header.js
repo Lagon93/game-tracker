@@ -1,6 +1,11 @@
 import React from 'react';
 
-function Header({ dataLength, totalAchievements, searchTerm, setSearchTerm, toggleDarkMode }) {
+function Header({ dataLength, totalAchievements, onSearch, toggleDarkMode }) {
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    onSearch(value);
+  };
+
   return (
     <header className="header">
       <div className="stats">
@@ -13,8 +18,7 @@ function Header({ dataLength, totalAchievements, searchTerm, setSearchTerm, togg
           <input 
             type="text" 
             placeholder="Buscar Juego..." 
-            value={searchTerm} 
-            onChange={(e) => setSearchTerm(e.target.value)} 
+            onChange={handleSearch} 
           />
         </div>
         <label className="switch">
@@ -24,8 +28,8 @@ function Header({ dataLength, totalAchievements, searchTerm, setSearchTerm, togg
         </label>
       </div>
       <a href="https://twitter.com/Lagon_93/status/1752067654364389802" target="_blank" rel="noopener noreferrer">
-          <img src="https://about.x.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.1920.png" alt="X Logo" className="twitter-logo" />
-        </a>
+        <img src="https://about.x.com/content/dam/about-twitter/x/brand-toolkit/logo-black.png.twimg.1920.png" alt="X Logo" className="twitter-logo" />
+      </a>
     </header>
   );
 }

@@ -9,26 +9,17 @@ import CardGallery from './CardGallery';
 import Tabs from './Tabs';
 
 function App() {
-  // Estado para almacenar los datos de los juegos
   const [data, setData] = useState([]);
-  // Estado para gestionar la carga de datos
+  const [filteredData, setFilteredData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  // Estado para el término de búsqueda
-  const [searchTerm, setSearchTerm] = useState('');
-  // Estado para el modo oscuro
   const [darkMode, setDarkMode] = useState(false);
-  // Estado para la configuración de ordenamiento
   const [sortConfig, setSortConfig] = useState({ key: '', direction: 'ascending' });
-  // Estado para la página actual de los juegos completados
   const [currentPage, setCurrentPage] = useState(1);
-  // Estado para la página actual de los juegos pendientes
   const [currentPendingPage, setCurrentPendingPage] = useState(1);
-  // Número de elementos por página
   const [itemsPerPage] = useState(10);
-  // Estado para la pestaña activa
+  const [itemsPerPageP] = useState(9);
   const [activeTab, setActiveTab] = useState('completed');
 
-  // useEffect para obtener los datos de la base de datos de Supabase
   useEffect(() => {
     async function fetchData() {
       try {
@@ -37,6 +28,7 @@ function App() {
           console.error('Error fetching data:', error.message);
         } else {
           setData(data);
+          setFilteredData(data.filter(item => !item.Pendiente));
         }
       } catch (error) {
         console.error('Error fetching data:', error.message);
@@ -47,23 +39,20 @@ function App() {
     fetchData();
   }, []);
 
-  // Calcula el total de logros obtenidos
   const totalAchievements = data.reduce((acc, item) => {
     const logros = parseInt(item.Logros, 10);
     return acc + (isNaN(logros) ? 0 : logros);
   }, 0);
 
-  // Alterna el modo oscuro
   const toggleDarkMode = () => setDarkMode(!darkMode);
 
-  // Filtra los datos según el término de búsqueda y si no están pendientes
-  const filteredData = React.useMemo(() => {
-    return data.filter(item =>
-      item.Juego.toLowerCase().includes(searchTerm.toLowerCase()) && !item.Pendiente
+  const handleSearch = (term) => {
+    const filtered = data.filter(item =>
+      item.Juego.toLowerCase().includes(term.toLowerCase()) && !item.Pendiente
     );
-  }, [data, searchTerm]);
+    setFilteredData(filtered);
+  };
 
-  // Ordena los datos filtrados según la configuración de ordenamiento
   const sortedData = React.useMemo(() => {
     let sortableData = [...filteredData];
     if (sortConfig.key) {
@@ -71,7 +60,6 @@ function App() {
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
 
-        // Convierte fechas y logros a un formato comparable
         if (sortConfig.key === 'Fecha de finalización') {
           aValue = aValue ? new Date(aValue.split('/').reverse().join('-')) : new Date();
           bValue = bValue ? new Date(bValue.split('/').reverse().join('-')) : new Date();
@@ -92,19 +80,16 @@ function App() {
     return sortableData;
   }, [filteredData, sortConfig]);
 
-  // Divide los datos ordenados en páginas
   const currentData = React.useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage;
     const endIndex = startIndex + itemsPerPage;
     return sortedData.slice(startIndex, endIndex);
   }, [sortedData, currentPage, itemsPerPage]);
 
-  // Filtra los juegos pendientes
   const pendingGames = React.useMemo(() => {
     return data.filter(item => item.Pendiente);
   }, [data]);
 
-  // Ordena los juegos pendientes según la configuración de ordenamiento
   const sortedPendingGames = React.useMemo(() => {
     let sortableData = [...pendingGames];
     if (sortConfig.key) {
@@ -112,7 +97,6 @@ function App() {
         let aValue = a[sortConfig.key];
         let bValue = b[sortConfig.key];
 
-        // Convierte fechas y logros a un formato comparable
         if (sortConfig.key === 'Fecha de finalización') {
           aValue = aValue ? new Date(aValue.split('/').reverse().join('-')) : new Date();
           bValue = bValue ? new Date(bValue.split('/').reverse().join('-')) : new Date();
@@ -133,14 +117,12 @@ function App() {
     return sortableData;
   }, [pendingGames, sortConfig]);
 
-  // Divide los juegos pendientes ordenados en páginas
   const currentPendingData = React.useMemo(() => {
-    const startIndex = (currentPendingPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
+    const startIndex = (currentPendingPage - 1) * itemsPerPageP;
+    const endIndex = startIndex + itemsPerPageP;
     return sortedPendingGames.slice(startIndex, endIndex);
-  }, [sortedPendingGames, currentPendingPage, itemsPerPage]);
+  }, [sortedPendingGames, currentPendingPage, itemsPerPageP]);
 
-  // Función para manejar el ordenamiento
   const requestSort = key => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -156,8 +138,7 @@ function App() {
       <Header 
         dataLength={data.length} 
         totalAchievements={totalAchievements} 
-        searchTerm={searchTerm} 
-        setSearchTerm={setSearchTerm} 
+        onSearch={handleSearch}
         toggleDarkMode={toggleDarkMode} 
       />
       <div className="glass-container">
