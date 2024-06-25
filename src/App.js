@@ -7,6 +7,8 @@ import Loader from './Loader';
 import Pagination from './Pagination';
 import CardGallery from './CardGallery';
 import Tabs from './Tabs';
+import Statistics from './Statistics';
+
 
 function App() {
   const [data, setData] = useState([]);
@@ -141,33 +143,40 @@ function App() {
         onSearch={handleSearch}
         toggleDarkMode={toggleDarkMode} 
       />
-      <div className="glass-container">
-        {isLoading ? <Loader /> : (
-          <>
-            <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
-            {activeTab === 'completed' ? (
-              <>
-                <Table data={currentData} requestSort={requestSort} />
-                <Pagination
-                  totalItems={sortedData.length}
-                  itemsPerPage={itemsPerPage}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                />
-              </>
-            ) : (
-              <>
-                <CardGallery pendingGames={currentPendingData} />
-                <Pagination
-                  totalItems={pendingGames.length}
-                  itemsPerPage={itemsPerPage}
-                  currentPage={currentPendingPage}
-                  setCurrentPage={setCurrentPendingPage}
-                />
-              </>
-            )}
-          </>
-        )}
+
+<div className="glass-container">
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Tabs activeTab={activeTab} setActiveTab={setActiveTab} />
+          {activeTab === 'completed' && (
+            <>
+              <Table data={currentData} requestSort={requestSort} />
+              <Pagination
+                totalItems={sortedData.length}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+              />
+            </>
+          )}
+          {activeTab === 'pending' && (
+            <>
+              <CardGallery pendingGames={currentPendingData} />
+              <Pagination
+                totalItems={pendingGames.length}
+                itemsPerPage={itemsPerPageP}
+                currentPage={currentPendingPage}
+                setCurrentPage={setCurrentPendingPage}
+              />
+            </>
+          )}
+          {activeTab === 'statistics' && (
+            <Statistics data={data} />
+          )}
+        </>
+      )}
       </div>
     </div>
   );

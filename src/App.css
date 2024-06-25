@@ -416,3 +416,26 @@ button:hover, a:hover {
   margin: 0;
   color: #666;
 }
+
+.statistics {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 20px;
+  height:100%;
+  flex-direction: column;
+  align-items: center;
+}
+
+.chart-container {
+  width: 40%;
+  height: 300px;
+}
+
+.stats-summary {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.listaTop{
+  list-style: none;
+}

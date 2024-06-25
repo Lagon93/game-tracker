@@ -15,6 +15,12 @@ const Tabs = ({ activeTab, setActiveTab }) => {
       >
         <b>Pendientes</b>
       </button>
+      <button 
+      className={`tab-button ${activeTab === 'statistics' ? 'active' : ''}`}
+        onClick={() => setActiveTab('statistics')}
+      >
+       <b>Estadísticas</b>
+      </button>
     </div>
   );
 };
