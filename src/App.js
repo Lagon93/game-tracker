@@ -41,6 +41,8 @@ function App() {
     fetchData();
   }, []);
 
+  const completedGames = data.filter(item => item['Fecha de finalización']);
+
   const totalAchievements = data.reduce((acc, item) => {
     const logros = parseInt(item.Logros, 10);
     return acc + (isNaN(logros) ? 0 : logros);
@@ -138,7 +140,7 @@ function App() {
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <Header 
-        dataLength={data.length} 
+        dataLength={completedGames.length} 
         totalAchievements={totalAchievements} 
         onSearch={handleSearch}
         toggleDarkMode={toggleDarkMode} 
