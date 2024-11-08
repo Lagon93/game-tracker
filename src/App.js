@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import supabase from './supabase';
 import './App.css';
 import Header from './Header';
 import Table from './Table';
@@ -8,6 +7,7 @@ import Pagination from './Pagination';
 import CardGallery from './CardGallery';
 import Tabs from './Tabs';
 import Statistics from './Statistics';
+import jsonData from './data/gameData.json';
 
 
 function App() {
@@ -25,13 +25,9 @@ function App() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data, error } = await supabase.from('Juegos_duplicate').select('*');
-        if (error) {
-          console.error('Error fetching data:', error.message);
-        } else {
+        const data = jsonData.juegos;
           setData(data);
           setFilteredData(data.filter(item => !item.Pendiente));
-        }
       } catch (error) {
         console.error('Error fetching data:', error.message);
       } finally {
@@ -39,6 +35,7 @@ function App() {
       }
     }
     fetchData();
+
   }, []);
 
   const completedGames = data.filter(item => item['Fecha de finalización']);
@@ -139,11 +136,11 @@ function App() {
 
   return (
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
-      <Header 
-        dataLength={completedGames.length} 
-        totalAchievements={totalAchievements} 
+      <Header
+        dataLength={completedGames.length}
+        totalAchievements={totalAchievements}
         onSearch={handleSearch}
-        toggleDarkMode={toggleDarkMode} 
+        toggleDarkMode={toggleDarkMode}
       />
 
 <div className="glass-container">
