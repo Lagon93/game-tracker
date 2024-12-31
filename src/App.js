@@ -7,7 +7,10 @@ import Pagination from './Pagination';
 import CardGallery from './CardGallery';
 import Tabs from './Tabs';
 import Statistics from './Statistics';
+import OBSDisplay from './OBSDisplay';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import jsonData from './data/gameData.json';
+import Propositos2025 from './Propositos2025';
 
 
 function App() {
@@ -135,6 +138,7 @@ function App() {
   };
 
   return (
+    <Router>
     <div className={`app ${darkMode ? 'dark-mode' : ''}`}>
       <Header
         dataLength={completedGames.length}
@@ -142,6 +146,9 @@ function App() {
         onSearch={handleSearch}
         toggleDarkMode={toggleDarkMode}
       />
+      <Routes>
+        <Route path="/" element={ //Renderizar vista principal
+        
 
 <div className="glass-container">
       {isLoading ? (
@@ -177,7 +184,12 @@ function App() {
         </>
       )}
       </div>
-    </div>
+                  } />
+              <Route path="/obs-display" element={<OBSDisplay data={data} />} />
+              <Route path="/propositos-2025" element={<Propositos2025 />} />
+              </Routes>
+            </div>
+          </Router>
   );
 }
 

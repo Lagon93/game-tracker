@@ -1,0 +1,34 @@
+.propositos-container {
+    margin: 0 auto;
+    padding: 20px;
+    max-width: 800px;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  h1 {
+    font-size: 2.5rem;
+    color: #4c56af;
+    margin-bottom: 20px;
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: center;
+  }
+  
+  ul li {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #333;
+  }
+  
+  ul li::before {
+    content: " ";
+    color: gold;
+  }
+  

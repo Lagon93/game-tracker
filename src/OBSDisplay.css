@@ -1,0 +1,81 @@
+/* OBSDisplay.css */
+.obs-display {
+    background-image: url(../public/obsbg.png);
+    background-color: black;
+    color: white;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-size: cover;
+    background-position: center;
+    width: 1920px;
+    height: 1080px;
+  }
+  
+  .obs-section {
+    margin-bottom: 20px;
+    margin-left:  11rem;
+  }
+  .obs-section2 {
+    margin-top: 37rem;
+    margin-left:  50rem;
+  }
+
+  .platinando-carousel {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    animation: slide 20s linear infinite;
+  }
+
+  .image-carousel {
+    position: relative;
+    width: 250px; /* Ajusta el tamaño del contenedor según lo necesites */
+    height: 150px; /* Ajusta la altura según lo necesites */
+    overflow: hidden;
+  }
+  
+  .game-cover {
+    width: 150px; /* Ajusta según el tamaño deseado de la carátula */
+    height: auto;
+    margin: 0 10px;
+  }
+
+  .gamep {
+    width: 200px; /* Ajusta según el tamaño deseado de la carátula */
+    height: 90px;
+    position: absolute;
+    object-fit: cover;
+    opacity: 0; /* Inicialmente, todas las imágenes están invisibles */
+    animation: fadeInOut 40s ease-in-out infinite;
+  }
+  
+  @keyframes fadeInOut {
+    0%, 100% {
+      opacity: 0;
+      z-index: 1;
+    }
+    10%, 90% {
+      opacity: 1;
+      z-index: 2;
+    }
+    50% {
+      opacity: 0;
+      z-index: 1;
+    }
+  }
+  
+  @keyframes slide {
+    0% {
+      transform: translateX(10%);
+    }
+    50% {
+      transform: translateX(-90%);
+    }
+    100% {
+      transform: translateX(-200%);
+    }
+  }
+  
+
+  
+  
